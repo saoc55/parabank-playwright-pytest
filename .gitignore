@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# dotenv
+.env
+.env.*
+!.env.example
+
+# IDE
+.idea/
+.vscode/
+
+# Playwright / pytest artifacts
+/test-results/
+/playwright-report/
+
+# Allure
+allure-results/
+allure-report/

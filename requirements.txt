@@ -1,0 +1,7 @@
+pytest>=8.0
+pytest-playwright>=0.7       # Playwright fixtures (page, browser, context) + CLI flags
+pytest-xdist>=3.5            # parallel workers  (-n 2)
+pytest-rerunfailures>=14.0   # retries           (--reruns 1)
+pytest-timeout>=2.3          # per test timeout  (--timeout 30)
+pytest-html>=4.1             # HTML report       (--html report.html)
+allure-pytest>=2.13          # Allure results    (--alluredir allure-results)
