@@ -66,10 +66,10 @@ python -m playwright install chromium firefox
 ## Running Tests
 
 ```bash
-# Run all tests (Chromium + Firefox, 2 workers, per pytest.ini)
+# Run all tests (Chromium + Firefox, per pytest.ini)
 pytest
 
-# Run headed (visible browser), single worker, one browser
+# Run headed (visible browser), one browser
 pytest --headed -n 0 --browser chromium
 
 # Run a specific file / a single test
@@ -110,7 +110,9 @@ Command line flags override `addopts` in `pytest.ini`; passing `--browser chromi
 
 **Page Object Model** — each page is a class with locators in `__init__` and interaction methods that encapsulate Playwright calls.
 
-**Fixtures** — `authenticated_page` in `conftest.py` builds on pytest-playwright's `page` fixture to provide a logged in page. Each test module adds a small fixture that creates and opens its page object, replacing `beforeEach`.
+**Fixtures** — a session scoped `auth_storage_state` fixture logs in once per browser and saves the session cookies; `authenticated_page` gives each test a fresh context that starts logged in. Each test module adds a small fixture that creates and opens its page object.
+
+**Rate limit safe** — the public ParaBank instance sits behind Cloudflare, which bans bursts of requests (HTTP 429, Error 1015). The suite stays under the limit by logging in once per browser instead of once per test, dropping image, font and media requests, and running on a single worker.
 
 **AJAX handling** — Parabank uses jQuery AJAX throughout. Page objects use `wait_for(state="attached")` and `wait_for(state="visible")` per endpoint behaviour instead of fixed sleeps.
 
